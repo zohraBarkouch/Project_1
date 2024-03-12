@@ -32,7 +32,9 @@ jobs:
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3.1.0
-
+      with:
+        gradle-version: '7.6.4'
+        
     - name: Build with Gradle Wrapper
       run: gradle build
       env:
