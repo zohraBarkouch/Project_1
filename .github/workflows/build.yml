@@ -47,7 +47,7 @@ jobs:
     - name: Build and push Docker image
       uses: mr-smithers-excellent/docker-build-push@v4
       with:
-        image: myusername/repodockerhubname
+        image:  zohrabarkouch/project_1
         registry: docker.io
         username: ${{secrets.DOCKER_Username}}
         password: ${{secrets.DOCKER_Password}}
