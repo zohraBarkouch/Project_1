@@ -51,6 +51,15 @@ jobs:
         tag: java-project
     #  run: ./gradlew build
     
+    - name: Build and push Docker image
+      uses: mr-smithers-excellent/docker-build-push@v4
+      with:
+        image: zohrabarkouch/project_1
+        registry: docker.io
+        username: ${{secrets.DOCKER_Username}}
+        password: ${{secrets.DOCKER_Password}}
+        tag: java-project
+    
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
     #
