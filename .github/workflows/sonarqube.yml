@@ -26,4 +26,4 @@ jobs:
           -Dsonar.projectKey=Project_1
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: http://172.17.0.2:9001
+        SONAR_HOST_URL: http://localhost:9001/
