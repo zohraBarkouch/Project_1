@@ -1,2 +1,2 @@
 rootProject.name = 'java-app'
-
+System.setProperty("sonar.gradle.skipCompile", "true")
