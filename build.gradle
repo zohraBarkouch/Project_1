@@ -36,5 +36,4 @@ sonar {
     property "sonar.projectName", "Project_1"
     property "sonar.gradle.skipCompile", "true"
   }
-  debug = true // Enable debug mode
 }
