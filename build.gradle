@@ -58,6 +58,8 @@ task integrationTest(type: Test) {
 checkstyle {
     toolVersion = '8.36.2'
     configFile = file("C:/Users/fbark/Downloads/my-project-master/my-project-master/checkstyle.xml")
+    // Configure suppression filter
+    configDir = file("$rootProject.projectDir/etc/checkstyle")
 }
 
 task checkstyle(type: Checkstyle) {
