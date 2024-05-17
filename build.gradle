@@ -30,10 +30,42 @@ test{
     testClassesDirs += project.sourceSets.test.output.classesDirs
 }
 
+// Define integrationTest task
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
+            runtimeClasspath += output + compileClasspath
+        }
+        resources.srcDir file('src/integrationTest/resources')
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+}
+
 sonar {
   properties {
     property "sonar.projectKey", "zohraBarkouch_Project_1_4c992da5-621a-4f74-ab00-ab7420e91747"
     property "sonar.projectName", "Project_1"
     property "sonar.gradle.skipCompile", "true"
+    property "sonar.projectVersion", "1.0"
+    property "sonar.sources", "src/main/java"
+    property "sonar.tests", "src/test/java"
+    property "sonar.java.binaries", "build/classes/java/main"
+    property "sonar.junit.reportsPath", "build/test-results/test"
+    property "sonar.jacoco.reportPaths", "build/jacoco/test.exec"
+    property "sonar.java.checkstyle.reportPaths", "build/reports/checkstyle/main.xml"
+    }
   }
-}
+
