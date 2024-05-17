@@ -16,4 +16,8 @@
         <!-- Add more Checkstyle modules as needed -->
     </module>
     <module name="FileTabCharacter"/>
+    <!-- Suppression file -->
+    <module name="SuppressionFilter">
+       <property name="file" value="${config_loc}/checkstyle-suppressions.xml"/>
+    </module>
 </module>
