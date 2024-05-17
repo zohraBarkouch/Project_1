@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '2.2.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id "org.sonarqube" version "4.4.1.3373"
+    id 'checkstyle'
 }
 
 group 'com.example'
@@ -53,7 +54,17 @@ task integrationTest(type: Test) {
     classpath = sourceSets.integrationTest.runtimeClasspath
     shouldRunAfter test
 }
-
+checkstyle {
+    // Configure Checkstyle to use your checkstyle.xml file
+    configFile = file("checkstyle.xml")
+}
+task checkstyleMain(type: Checkstyle) {
+    group = 'verification'
+    source 'src/main/java'
+    include '**/*.java'
+    // You can omit this line if your checkstyle.xml file is located at the root of your project
+    configFile file("checkstyle.xml")
+}
 sonar {
   properties {
     property "sonar.projectKey", "zohraBarkouch_Project_1_4c992da5-621a-4f74-ab00-ab7420e91747"
