@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SONARSERVER = 'sonarserver'
-        SONARSCANNER = 'sonarscanner5' // updated to match tool name used in the environment
+        SONARSCANNER = 'sonarscanner5' // Ensure this matches the name used in your environment configuration
     }
 
     stages {
@@ -14,7 +14,10 @@ pipeline {
             post {
                 success {
                     echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/build/libs/*.war'
+                    archiveArtifacts artifacts: '**/build/libs/*.jar', allowEmptyArchive: false
+                }
+                failure {
+                    echo 'Build failed!'
                 }
             }
         }
