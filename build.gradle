@@ -57,7 +57,7 @@ task integrationTest(type: Test) {
 
 checkstyle {
     toolVersion = '8.36.2'
-    configFile = file("checkstyle.xml")
+    configFile = file("C:\Users\fbark\Downloads\my-project-master\my-project-master\checkstyle.xml")
 }
 
 task checkstyle(type: Checkstyle) {
