@@ -54,16 +54,16 @@ task integrationTest(type: Test) {
     classpath = sourceSets.integrationTest.runtimeClasspath
     shouldRunAfter test
 }
+
 checkstyle {
-    // Configure Checkstyle to use your checkstyle.xml file
+    toolVersion = '8.36.2'
     configFile = file("checkstyle.xml")
 }
-task checkstyleMain(type: Checkstyle) {
-    group = 'verification'
+
+task checkstyle(type: Checkstyle) {
     source 'src/main/java'
     include '**/*.java'
-    // You can omit this line if your checkstyle.xml file is located at the root of your project
-    configFile file("checkstyle.xml")
+    classpath = files()
 }
 sonar {
   properties {
