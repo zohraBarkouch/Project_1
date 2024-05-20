@@ -41,7 +41,7 @@ pipeline {
             }
 
             steps {
-                withSonarQubeEnv('sonar-pro') {
+                withSonarQubeEnv('sonarqube') {
                     sh '''${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=zohraBarkouch_Project_1_4c992da5-621a-4f74-ab00-ab7420e91747 \
                         -Dsonar.projectName=Project_1 \
