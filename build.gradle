@@ -3,7 +3,6 @@ plugins {
     id 'org.springframework.boot' version '2.2.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id "org.sonarqube" version "4.4.1.3373"
-    id 'checkstyle'
 }
 
 group 'com.example'
@@ -55,16 +54,6 @@ task integrationTest(type: Test) {
     shouldRunAfter test
 }
 
-checkstyle {
-    toolVersion = '8.36.2'
-    configFile = project.file("checkstyle.xml")
-}
-
-task checkstyle(type: Checkstyle) {
-    source 'src/main/java'
-    include '**/*.java'
-    classpath = files()
-}
 sonar {
   properties {
     property "sonar.projectKey", "zohraBarkouch_Project_1_4c992da5-621a-4f74-ab00-ab7420e91747"
