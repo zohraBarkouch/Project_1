@@ -1,0 +1,6 @@
+projectKey=zohraBarkouch_Project_1_aeeeb9ab-fe37-49a0-bb58-24b81d1daace
+serverUrl=http://192.168.1.149:9001
+serverVersion=10.4.1.88267
+dashboardUrl=http://192.168.1.149:9001/dashboard?id=zohraBarkouch_Project_1_aeeeb9ab-fe37-49a0-bb58-24b81d1daace
+ceTaskId=f9d526e4-adff-4b5c-961a-203cfdb35072
+ceTaskUrl=http://192.168.1.149:9001/api/ce/task?id=f9d526e4-adff-4b5c-961a-203cfdb35072
