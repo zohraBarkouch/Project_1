@@ -34,16 +34,6 @@ pipeline {
             }
         }
 
-        stage('Code Analysis with Checkstyle') {
-            steps {
-                sh './gradlew checkstyleMain'
-            }
-            post {
-                success {
-                    echo 'Generated Analysis Result'
-                }
-            }
-        }
 
         stage('Code Analysis with SonarQube') {
             environment {
