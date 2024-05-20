@@ -45,6 +45,8 @@ pipeline {
                     sh '''${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=zohraBarkouch_Project_1_4c992da5-621a-4f74-ab00-ab7420e91747 \
                         -Dsonar.projectName=Project_1 \
+                        -Dsonar.login=zohra \
+                        -Dsonar.password=1230812308 \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sources=src/main/java \
                         -Dsonar.tests=src/test/java \
