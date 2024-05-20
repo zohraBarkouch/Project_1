@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SONARSERVER = 'sonarserver'
-        SONARSCANNER = 'sonarscanner5' // Ensure this matches the name used in your environment configuration
+        SONARSCANNER = 'sonarscanner' // Ensure this matches the name used in your environment configuration
     }
 
     stages {
