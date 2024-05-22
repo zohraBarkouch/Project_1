@@ -2,8 +2,9 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.2.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-    id "org.sonarqube" version "4.4.1.3373"
+    //id "org.sonarqube" version "4.4.1.3373"
     id 'jacoco'
+    id "org.sonarqube" version "3.5.0.2730"
 }
 
 group 'com.example'
@@ -61,7 +62,8 @@ task integrationTest(type: Test) {
 
 sonar {
   properties {
-    property "sonar.projectKey", "zohraBarkouch_Project_1_4c992da5-621a-4f74-ab00-ab7420e91747"
+   // property "sonar.projectKey", "zohraBarkouch_Project_1_4c992da5-621a-4f74-ab00-ab7420e91747"
+    property "sonar.projectKey", "zohraBarkouch_Project_1_AY-f24pdMIvyUscUZhFT"
     property "sonar.projectName", "Project_1"
     property "sonar.gradle.skipCompile", "true"
     property "sonar.projectVersion", "1.0"
