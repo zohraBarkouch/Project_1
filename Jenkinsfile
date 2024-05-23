@@ -9,9 +9,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                script {
                // sh './gradlew clean build -x test'
+                timeout(time: 30, unit: 'MINUTES'){
                 sh './gradlew clean build -x test --no-daemon --info'
             }
+            }}
             post {
                 success {
                     echo 'Now Archiving...'
@@ -25,9 +28,13 @@ pipeline {
 
         stage('Unit Test') {
             steps {
-                sh './gradlew test'
+                script {
+                    retry(2) {
+                        timeout(time: 20, unit: 'MINUTES') {
+                       // sh './gradlew test'
+                        sh './gradlew test --no-daemon --info'
             }
-        }
+            }}}}
 
         stage('Integration Test') {
             steps {
