@@ -39,7 +39,10 @@ pipeline {
             post {
                 always {
                     // List test result files for debugging
-                    sh 'ls -l build/test-results/test'
+                    sh 'ls -lR build/test-results/test'
+                    
+                    // Print the content of the test-results directory for debugging
+                    sh 'find build/test-results/test -type f -exec cat {} +'
                     
                     // Publish JUnit test results
                     junit 'build/test-results/test/*.xml'
