@@ -7,22 +7,12 @@ pipeline {
     }
 
      stages {
+      
+
         stage('Build') {
             steps {
                 script {
-                    // Set a timeout of 30 minutes to ensure the build does not hang indefinitely
-                    timeout(time: 30, unit: 'MINUTES') {
-                        sh './gradlew clean build -x test --no-daemon --info'
-                    }
-                }
-            }
-            post {
-                success {
-                    echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/build/libs/*.jar', allowEmptyArchive: false
-                }
-                failure {
-                    echo 'Build failed!'
+                    sh './gradlew clean build --no-daemon'
                 }
             }
         }
@@ -32,7 +22,7 @@ pipeline {
                 script {
                     // Set a timeout of 30 minutes as a safeguard, but tests should typically run faster
                     timeout(time: 30, unit: 'MINUTES') {
-                        sh './gradlew test --no-daemon --info --rerun-tasks'
+                        sh './gradlew test --no-daemon --info --rerun-ttasks'
                     }
                 }
             }
