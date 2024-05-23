@@ -6,15 +6,16 @@ pipeline {
         SONARSCANNER = 'sonarscanner' // Ensure this matches the name used in your environment configuration
     }
 
-    stages {
+     stages {
         stage('Build') {
             steps {
                 script {
-               // sh './gradlew clean build -x test'
-                timeout(time: 30, unit: 'MINUTES'){
-                sh './gradlew clean build -x test --no-daemon --info'
+                    // Set a timeout of 30 minutes to ensure the build does not hang indefinitely
+                    timeout(time: 30, unit: 'MINUTES') {
+                        sh './gradlew clean build -x test --no-daemon --info'
+                    }
+                }
             }
-            }}
             post {
                 success {
                     echo 'Now Archiving...'
@@ -25,16 +26,22 @@ pipeline {
                 }
             }
         }
+
         stage('Unit Test') {
             steps {
                 script {
+                    // Set a timeout of 30 minutes as a safeguard, but tests should typically run faster
                     timeout(time: 30, unit: 'MINUTES') {
-                        sh './gradlew test --no-daemon --info'
+                        sh './gradlew test --no-daemon --info --rerun-tasks'
                     }
                 }
             }
             post {
                 always {
+                    // List test result files for debugging
+                    sh 'ls -l build/test-results/test'
+                    
+                    // Publish JUnit test results
                     junit 'build/test-results/test/*.xml'
                 }
                 success {
@@ -45,6 +52,47 @@ pipeline {
                 }
             }
         }
+
+
+  //  stages {
+    //    stage('Build') {
+      //      steps {
+         //       script {
+               // sh './gradlew clean build -x test'
+          //      timeout(time: 30, unit: 'MINUTES'){
+              //  sh './gradlew clean build -x test --no-daemon --info'
+          //  }
+          //  }}
+         //   post {
+          //      success {
+             //       echo 'Now Archiving...'
+               //     archiveArtifacts artifacts: '**/build/libs/*.jar', allowEmptyArchive: false
+           //     }
+          //      failure {
+                //    echo 'Build failed!'
+             //   }
+          //  }
+       // }
+   //     stage('Unit Test') {
+   //         steps {
+            //    script {
+                 //   timeout(time: 30, unit: 'MINUTES') {
+                      //  sh './gradlew test --no-daemon --info'
+                  //  }
+               // }
+           // }
+        //    post {
+            //    always {
+              //      junit 'build/test-results/test/*.xml'
+              //  }
+            //    success {
+                  //  echo 'Unit tests passed!'
+              //  }
+             //   failure {
+                  //  echo 'Unit tests failed!'
+                // }
+          //  }
+       // }
 
        // stage('Unit Test') {
           //  steps {
