@@ -9,7 +9,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh './gradlew clean build -x test'
+               // sh './gradlew clean build -x test'
+                sh './gradlew clean build -x test --no-daemon --info'
             }
             post {
                 success {
