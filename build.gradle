@@ -31,9 +31,25 @@ dependencies {
     //testImplementation 'junit:junit:4.12'
     // Other dependencies...
 }
-test{
+
+test {
     useJUnitPlatform()
     testClassesDirs += project.sourceSets.test.output.classesDirs
+    reports {
+        junitXml.enabled = true
+        junitXml.destination = file("$buildDir/test-results/test")
+        html.enabled = true
+        html.destination = file("$buildDir/reports/tests")
+    }
+}
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.enabled = true
+        xml.destination = file("$buildDir/reports/jacoco/test/jacocoTestReport.xml")
+        html.enabled = true
+        html.destination = file("$buildDir/reports/jacoco/test/html")
+    }
 }
 
 // Define integrationTest task
