@@ -25,13 +25,33 @@ pipeline {
                 }
             }
         }
-
         stage('Unit Test') {
             steps {
-                       sh './gradlew test --debug'
+                script {
+                    timeout(time: 30, unit: 'MINUTES') {
+                        sh './gradlew test --no-daemon --info'
+                    }
+                }
+            }
+            post {
+                always {
+                    junit 'build/test-results/test/*.xml'
+                }
+                success {
+                    echo 'Unit tests passed!'
+                }
+                failure {
+                    echo 'Unit tests failed!'
+                }
+            }
+        }
+
+       // stage('Unit Test') {
+          //  steps {
+               //        sh './gradlew test --debug'
                   
-            }
-            }
+         //   }
+         //   }
 
         stage('Integration Test') {
             steps {
