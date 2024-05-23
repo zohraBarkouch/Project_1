@@ -28,13 +28,10 @@ pipeline {
 
         stage('Unit Test') {
             steps {
-                script {
-                    retry(2) {
-                        timeout(time: 20, unit: 'MINUTES') {
-                       // sh './gradlew test'
-                        sh './gradlew test --no-daemon --info'
+                       sh './gradlew test'
+                  
             }
-            }}}}
+            }
 
         stage('Integration Test') {
             steps {
