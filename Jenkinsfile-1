@@ -1,0 +1,94 @@
+pipeline {
+    agent any
+
+    environment {
+        ANSIBLE_PLAYBOOK = 'playbook.yml'
+        ANSIBLE_INVENTORY = 'hosts'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                        playbook: "${env.ANSIBLE_PLAYBOOK}",
+                        inventory: "${env.ANSIBLE_INVENTORY}",
+                        tags: 'checkout'
+                    )
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                        playbook: "${env.ANSIBLE_PLAYBOOK}",
+                        inventory: "${env.ANSIBLE_INVENTORY}",
+                        tags: 'build'
+                    )
+                }
+            }
+        }
+        stage('Unit Test') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                        playbook: "${env.ANSIBLE_PLAYBOOK}",
+                        inventory: "${env.ANSIBLE_INVENTORY}",
+                        tags: 'unit_test'
+                    )
+                }
+            }
+            post {
+                always {
+                    junit 'build/test-results/test/*.xml'
+                }
+                success {
+                    echo 'Unit tests passed!'
+                }
+                failure {
+                    echo 'Unit tests failed!'
+                }
+            }
+        }
+        stage('Integration Test') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                        playbook: "${env.ANSIBLE_PLAYBOOK}",
+                        inventory: "${env.ANSIBLE_INVENTORY}",
+                        tags: 'integration_test'
+                    )
+                }
+            }
+        }
+        stage('Code Analysis with SonarQube') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                        playbook: "${env.ANSIBLE_PLAYBOOK}",
+                        inventory: "${env.ANSIBLE_INVENTORY}",
+                        tags: 'code_analysis'
+                    )
+                }
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                        playbook: "${env.ANSIBLE_PLAYBOOK}",
+                        inventory: "${env.ANSIBLE_INVENTORY}",
+                        tags: 'build_docker_image'
+                    )
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
