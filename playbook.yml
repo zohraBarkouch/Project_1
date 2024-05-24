@@ -1,0 +1,56 @@
+---
+- name: Jenkins CI/CD Pipeline
+  hosts: jenkins_server
+  vars:
+    project_dir: /var/jenkins_home/workspace/Project_1
+    docker_image_name: zohrabarkouch/project_1:tjava-project
+    dockerfile_path: /var/jenkins_home/workspace/Project_1/Dockerfile
+    sonar_host_url: 'http://84.247.162.159:3000'
+    sonar_login: 'admin'
+  tasks:
+    - name: Checkout code from SCM
+      git:
+        repo: 'https://github.com/zohraBarkouch/Project_1.git'
+        dest: "{{ project_dir }}"
+
+    - name: Build the project
+      command: ./gradlew clean build --no-daemon
+      args:
+        chdir: "{{ project_dir }}"
+      
+    - name: Run unit tests
+      command: ./gradlew test --no-daemon
+      args:
+        chdir: "{{ project_dir }}"
+
+    - name: Run integration tests
+      command: ./gradlew integrationTest --no-daemon
+      args:
+        chdir: "{{ project_dir }}"
+
+    - name: Run code analysis with SonarQube
+      command: >
+        ./gradlew sonarqube 
+        -Dsonar.projectKey=zohraBarkouch_Project_1_AY-f24pdMIvyUscUZhFT 
+        -Dsonar.projectName=Project_1 
+        -Dsonar.login=admin 
+        -Dsonar.password=1230812308 
+        -Dsonar.projectVersion=1.0 
+        -Dsonar.sources=src/main/java 
+        -Dsonar.tests=src/test/java 
+        -Dsonar.java.binaries=build/classes/java/main 
+        -Dsonar.junit.reportsPath=build/test-results/test 
+        -Dsonar.jacoco.reportPaths=build/jacoco/test.exec 
+      args:
+        chdir: "{{ project_dir }}"
+      environment:
+        SONAR_HOST_URL: "{{ sonar_host_url }}"
+        SONAR_LOGIN: "{{ sonar_login }}"
+
+    - name: Build Docker image
+      community.docker.docker_image:
+        build:
+          path: "{{ project_dir }}"
+          dockerfile: "{{ dockerfile_path }}"
+        name: "{{ docker_image_name }}"
+        tag: latest
