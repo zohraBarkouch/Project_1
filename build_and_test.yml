@@ -1,0 +1,25 @@
+---
+- name: Build and Test Java Application
+  hosts: jenkins
+ vars:
+    project_dir: /var/jenkins_home/workspace/Project_1
+  tasks:
+    - name: Checkout code from Git
+      git:
+        repo: 'https://github.com/zohraBarkouch/Project_1.git'
+        dest: "{{ project_dir }}"
+
+    - name: Build with Gradle
+      command: ./gradlew build
+      args:
+        chdir: "{{ project_dir }}"
+
+    - name: Run Unit Tests
+      command: ./gradlew test
+      args:
+        chdir: "{{ project_dir }}"
+
+    - name: Run Integration Tests
+      command: ./gradlew integrationTest
+      args:
+        chdir: "{{ project_dir }}"
