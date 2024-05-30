@@ -1,7 +1,7 @@
 ---
 - name: Build and Test Java Application
   hosts: jenkins
- vars:
+  vars:
     project_dir: /var/jenkins_home/workspace/Project_1
   tasks:
     - name: Checkout code from Git
