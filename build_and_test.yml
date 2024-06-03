@@ -3,7 +3,7 @@
   hosts: jenkins
   vars:
     project_dir: /var/jenkins_home/workspace/Project_1
-    java_home: /opt/java/openjdk
+    java_home: /opt/java
   tasks:
     - name: Ensure the workspace directory exists
       file:
