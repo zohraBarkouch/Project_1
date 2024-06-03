@@ -3,6 +3,7 @@
   hosts: jenkins
   vars:
     project_dir: /var/jenkins_home/workspace/Project_1
+    java_home: /usr/lib/jvm/java-17-openjdk-amd64
   tasks:
     - name: Ensure the workspace directory exists
       file:
@@ -23,14 +24,19 @@
       command: ./gradlew build
       args:
         chdir: "{{ project_dir }}"
+      environment:
+        JAVA_HOME: "{{ java_home }}"
 
     - name: Run Unit Tests
       command: ./gradlew test
       args:
         chdir: "{{ project_dir }}"
+      environment:
+        JAVA_HOME: "{{ java_home }}"
 
     - name: Run Integration Tests
       command: ./gradlew integrationTest
       args:
         chdir: "{{ project_dir }}"
-
+      environment:
+        JAVA_HOME: "{{ java_home }}"
