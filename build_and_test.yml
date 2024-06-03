@@ -16,7 +16,7 @@
       git:
         repo: 'https://github.com/zohraBarkouch/Project_1.git'
         dest: "{{ project_dir }}"
-        force: true
+        force: yes
 
     - name: Build with Gradle
       command: ./gradlew build
