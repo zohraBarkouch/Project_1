@@ -3,7 +3,7 @@
   hosts: jenkins
   vars:
     project_dir: /var/jenkins_home/workspace/Project_1
-    java_home: /opt/java
+    java_home: /usr/lib/jvm/java-17-openjdk-amd64
   tasks:
     - name: Ensure the workspace directory exists
       file:
@@ -19,6 +19,12 @@
         dest: "{{ project_dir }}"
         force: true
       ignore_errors: yes
+
+    - name: Set JAVA_HOME environment variable
+      ansible.builtin.set_fact:
+        JAVA_HOME: "{{ java_home }}"
+      become: yes
+      become_user: jenkins
 
     - name: Build with Gradle
       command: ./gradlew build
