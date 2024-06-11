@@ -4,6 +4,10 @@
   vars:
     project_dir: /var/jenkins_home/workspace/Project_1
     java_home: /usr/lib/jvm/java-17-openjdk-amd64
+    sonar_host_url: 'http://84.247.162.159:3000'
+    sonar_login: 'admin'
+    sonar_password: '1230812308'
+
   tasks:
     - name: Ensure the workspace directory exists
       file:
@@ -46,3 +50,22 @@
         chdir: "{{ project_dir }}"
       environment:
         JAVA_HOME: "{{ java_home }}"
+
+    - name: Run code analysis with SonarQube
+      command: >
+        ./gradlew sonarqube
+        -Dsonar.projectKey=zohraBarkouch_Project_1_AY-f24pdMIvyUscUZhFT
+        -Dsonar.projectName=Project_1
+        -Dsonar.login={{ sonar_login }}
+        -Dsonar.password={{ sonar_password }}
+        -Dsonar.projectVersion=1.0
+        -Dsonar.sources=src/main/java
+        -Dsonar.tests=src/test/java
+        -Dsonar.java.binaries=build/classes/java/main
+        -Dsonar.junit.reportsPath=build/test-results/test
+        -Dsonar.jacoco.reportPaths=build/jacoco/test.exec
+      args:
+        chdir: "{{ project_dir }}"
+      environment:
+        SONAR_HOST_URL: "{{ sonar_host_url }}"
+        SONAR_LOGIN: "{{ sonar_login }}"
